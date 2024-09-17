@@ -11,6 +11,14 @@ sample:
 sample
    gitrepo\3103activity\customer> npm start
 
+to do. 
+add counter for every instance
+add new variables to customers, and products, 
+UPDATE and DELETE to all services
+
+
+
+
 
 
 
