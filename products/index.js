@@ -4,18 +4,32 @@ const port = 3001;
 
 app.use(express.json());
 let products = [];
+let idCounter = 0;
+
+app.get('/products/getAll', (req, res) => {
+    try{
+        res.status(200).json(customers);
+    } catch (error){
+        res.status(500).json({message: "server error"});
+    }
+})
+
+
+
+
+
 
 app.get('/products/getProduct/:productId', (req,res) => {
 
     const productId = parseInt(req.params.productId);
-    const product = products.find((product) => product.id === productId);
+    const productData = products.find((product) => product.id === productId);
 
-    if(!product){
+    if(!productData){
         return res.status(404).json({error: "Product not found"});
     }
 
     try{
-        res.status(200).json(product);
+        res.status(200).json(productData);
     } catch (error) {
         res.status(500).json({error: "There is an error"});
     }
@@ -23,12 +37,12 @@ app.get('/products/getProduct/:productId', (req,res) => {
 
 
 
-app.post('/products/addProducts', (req, res) =>{
+app.post('/products/addProduct', (req, res) =>{
 
     const item = req.body;
 
     const product = {
-        id: products.length,
+        id: idCounter++,
         name: item.name,
         price: item.price
     }
@@ -39,11 +53,25 @@ app.post('/products/addProducts', (req, res) =>{
     } catch (error){
         res.status(500).json({error: "There is an error"});
     }
-
-
 })
 
+app.delete('/products/deleteProduct/:productId', (req, res) => {
+    const productId = parseInt(req.params.productId);
+    const productIndex = products.findIndex((product) => product.id === productId);
 
+    try{
+        console.log(productId);
+        if(productIndex === -1){
+            return res.status(404).json({message: "Product not found"});
+        } else {
+            console.log(productIndex);
+            products.splice(productIndex, 1);
+            res.status(200).json({message: "Deleted Successfully"});
+        }
+    } catch (error){
+        res.status(500).json({error: "There is an error"});
+    }
+})
 
 
 
