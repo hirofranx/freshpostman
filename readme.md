@@ -1,4 +1,4 @@
-1 . clone git repo to your vscode
+1. clone git repo to your vscode
 2. cd to every folder, "customer", "order", and "products"
 sample: 
   gitrepo\3103activity\customer>
